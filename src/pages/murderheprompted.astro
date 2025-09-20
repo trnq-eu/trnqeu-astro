@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import "../styles/global.css";
+const allCases = Object.values(import.meta.glob('./cases/*.md', {eager: true}));
+const pageTitle = 'Murder, he prompted';
+
+---
+
+<BaseLayout pageTitle = {pageTitle}>
+  <h2>Chief prompter Aguardento reporting for duty</h2>
+  <ul>
+    {allCases.map((post: any) => <li><a href={post.url}>{post.frontmatter.title}</a></li>)}
+  </ul>
+</BaseLayout>
