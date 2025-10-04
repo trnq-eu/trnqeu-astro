@@ -1,30 +1,37 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
+import MarkdownPost from '../../layouts/MarkdownPost.astro';
 
 export async function getStaticPaths() {
     const allPosts = Object.values(import.meta.glob(['../ideas/*.md', '../cases/*.md'], { eager: true}));
-    return [
-        { params: { tag: "fiction" }, props: {posts: allPosts} },
-        { params: { tag: "dhamma" }, props: {posts: allPosts} },
-        { params: { tag: "AI" }, props: {posts: allPosts} },
-        { params: { tag: "ideas" }, props: {posts: allPosts} },
-        { params: { tag: "python" }, props: {posts: allPosts} },
-        { params: { tag: "typescript" }, props: {posts: allPosts} },
-        { params: { tag: "art" }, props: {posts: allPosts} },
-        { params: { tag: "comedy" }, props: {posts: allPosts} },
-        { params: { tag: "learning" }, props: {posts: allPosts} },
-    ];
+    
+    const uniqueTags = [...new Set(allPosts.map((post: any) => post.frontmatter.tags).flat())]
+    return uniqueTags.map((tag) => {
+        const filteredPosts = allPosts.filter((post: any) => post.frontmatter.tags.includes(tag));
+        return {
+            params: { tag },
+            props: { posts: filteredPosts },
+        };
+    });
 }
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
-const filteredPosts = posts.filter((post: any) => post.frontmatter.tags?.includes(tag));
 ---
 
 <BaseLayout pageTitle={tag}>
     <p>Posts tagged with {tag} </p>
     <ul>
-        {filteredPosts.map((post: any) => <li><a href={post.url}>{post.frontmatter.title}</a></li>)}
+        {posts.map((post: any) => (
+            <li>
+                <a href={post.url}><h3>{post.frontmatter.title}</h3></a>
+                {post.frontmatter.description && <p><em>{post.frontmatter.description}</em></p>}
+                <small>
+                    Published on: {post.frontmatter.pubDate.toString().slice(0, 10)}
+                    {post.frontmatter.author && ` | Written by ${post.frontmatter.author}`}
+                </small>
+            </li>
+        ))}
     </ul>
 </BaseLayout>
 
