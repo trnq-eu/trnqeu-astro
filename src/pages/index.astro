@@ -1,9 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import "../styles/global.css";
-const pageTitle = "Home Page";
-
+const pageTitle = "VOLKS-TYPO";
 ---
-<BaseLayout pageTitle = {pageTitle}>
-  <h2>My awesome blog subtitle</h2>
+<BaseLayout pageTitle={pageTitle}>
+  <h1 class="hero-title">VOLKS-TYPO</h1>
+  <h2 class="hero-subtitle">BAUHAUS MEETS MONUMENTAL</h2>
+  <p class="hero-description">
+    An aesthetic exploration where Bauhaus functionalism collides with monumental grandeur. Form follows function, with a twist.
+  </p>
+  <hr class="hero-divider" />
+  <div class="button-group">
+    <a href="#" class="button button-primary">VIEW DEMO</a>
+    <a href="#" class="button button-secondary">GET STARTED</a>
+  </div>
 </BaseLayout>

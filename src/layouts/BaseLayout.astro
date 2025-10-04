@@ -2,6 +2,7 @@
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import logo from '../assets/red_circle.svg';
 
 const  { pageTitle } = Astro.props;
 ---
@@ -15,14 +16,18 @@ const  { pageTitle } = Astro.props;
     <title>{pageTitle}</title>
   </head>
   <body>
-    <header>  
-      <nav>
-        <Navigation />
-      </nav>
+    <header>
+      <a href="/" class="logo">
+        <img src={logo.src} alt="logo" width="40" height="40" />
+      </a>
+      <Navigation />
+      <div class="header-actions">
+        <!-- Icons and buttons will go here -->
+        <a href="#" class="star-button">STAR</a>
+      </div>
     </header>
     <main>
-        <h1>{pageTitle}</h1>
-    <slot />
+      <slot />
     </main>
     <Footer />
   </body>
